@@ -1,4 +1,5 @@
-%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+#%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+%global upstream_version 0.23.1.dev10
 
 # Python3 support in OpenStack starts with version 3.5,
 # which is only in Fedora 24+
@@ -13,8 +14,8 @@
 %global sclient watcherclient
 
 Name:       %{client}
-Version:    XXX
-Release:    XXX
+Version:    0
+Release:    23.1.dev10
 Summary:    OpenStack Watcher client
 License:    ASL 2.0
 URL:        http://launchpad.net/%{client}/
