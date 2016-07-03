@@ -1,13 +1,10 @@
 #%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
-%global upstream_version 0.23.1.dev10
+%global upstream_version 0.23.0
 
 # Python3 support in OpenStack starts with version 3.5,
 # which is only in Fedora 24+
 %if 0%{?fedora} >= 24
 %global with_python3 1
-%global default_python 3
-%else
-%global default_python 2
 %endif
 
 %global client python-watcherclient
@@ -15,12 +12,12 @@
 
 Name:       %{client}
 Version:    0
-Release:    23.1.dev10
+Release:    23.0
 Summary:    OpenStack Watcher client
 License:    ASL 2.0
 URL:        http://launchpad.net/%{client}/
 
-Source0:    http://tarballs.openstack.org/%{client}/%{client}-master.tar.gz
+Source0:    http://tarballs.openstack.org/%{client}/%{client}-%{upstream_version}.tar.gz
 
 BuildArch:  noarch
 
@@ -37,6 +34,9 @@ BuildRequires:  python2-oslo-sphinx >= 2.5.0
 BuildRequires:  python-oslotest >= 1.10.0
 BuildRequires:  python-pbr >= 1.6
 BuildRequires:  python-setuptools
+BuildRequires:  python-keystoneclient >= 1.7.0
+BuildRequires:  python-cliff
+BuildRequires:  python-openstackclient >= 2.1.0
 BuildRequires:  python-subunit >= 0.0.18
 BuildRequires:  python-testrepository >= 0.0.18
 BuildRequires:  python-testscenarios >= 0.4
@@ -111,6 +111,9 @@ BuildRequires:  python3-pbr >= 1.6
 BuildRequires:  python3-setuptools
 BuildRequires:  git
 BuildRequires:  python3-mock >= 1.2
+BuildRequires:  python3-keystoneclient >= 1.7.0
+BuildRequires:  python3-cliff
+BuildRequires:  python-openstackclient >= 2.1.0
 BuildRequires:  python3-coverage >= 3.6
 BuildRequires:  python3-hacking >= 0.10.2
 BuildRequires:  python3-oslo-sphinx >= 2.5.0
@@ -121,11 +124,11 @@ BuildRequires:  python3-testscenarios >= 0.4
 BuildRequires:  python3-testtools >= 1.4.0
 BuildRequires:  python3-wheel
 
-Requires:   python3-oslo-config >= 2:3.4.0
 Requires:   python3-babel >= 2.3.4
 Requires:   python3-cliff >= 1.15.0
 Requires:   python3-oslo-i18n >= 2.1.0
 Requires:   python3-oslo-utils >= 3.11.0
+Requires:   python3-oslo-config >= 2:3.4.0
 Requires:   python3-pbr >= 1.6
 Requires:   python3-prettytable >= 0.7
 Requires:   python3-keystoneclient >= 1.7.0
@@ -181,6 +184,7 @@ rm -f *requirements.txt
 %endif
 
 # generate html docs
+export PYTHONPATH=.
 sphinx-build -b html doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
@@ -200,29 +204,30 @@ rm -rf .testrepository
 %endif
 %{__python2} setup.py test
 
+#NOTE(danpawlik) Probably License file will be added in new release.
 %files -n python2-%{sclient}
-%license LICENSE
+%{_bindir}/watcher
+#%license LICENSE
 %{python2_sitelib}/%{sclient}
 %{python2_sitelib}/*.egg-info
-%exclude %{python2_sitelib}/%{sclient}/tests
 
 %files -n python2-%{sclient}-tests
-%license LICENSE
+#%license LICENSE
 %{python2_sitelib}/%{sclient}/tests
 
 %files -n python-%{sclient}-doc
-%license LICENSE
+#%license LICENSE
 %doc html README.rst
 
 %if 0%{?with_python3}
 %files -n python3-%{sclient}
-%license LICENSE
+%{_bindir}/watcher
+#%license LICENSE
 %{python3_sitelib}/%{sclient}
 %{python3_sitelib}/*.egg-info
-%exclude %{python3_sitelib}/%{sclient}/tests
 
 %files -n python3-%{sclient}-tests
-%license LICENSE
+#%license LICENSE
 %{python3_sitelib}/%{sclient}/tests
 %endif # with_python3
 
