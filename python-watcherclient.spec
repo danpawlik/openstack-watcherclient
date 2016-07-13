@@ -10,6 +10,7 @@
 %global client python-watcherclient
 %global sclient watcherclient
 
+Epoch:      1
 Name:       %{client}
 Version:    0
 Release:    23.0
@@ -27,7 +28,7 @@ Summary:    OpenStack Watcher client
 
 BuildRequires:  python2-devel
 BuildRequires:  git
-BuildRequires:  mock >= 1.2
+BuildRequires:  python2-mock >= 1.2
 BuildRequires:  python-coverage >= 3.6
 BuildRequires:  python-hacking >= 0.10.2
 BuildRequires:  python2-oslo-sphinx >= 2.5.0
@@ -41,7 +42,6 @@ BuildRequires:  python-subunit >= 0.0.18
 BuildRequires:  python-testrepository >= 0.0.18
 BuildRequires:  python-testscenarios >= 0.4
 BuildRequires:  python-testtools >= 1.4.0
-BuildRequires:  python-wheel
 BuildRequires:  python2-devel
 BuildRequires:  sphinx >= 1.1.2
 BuildRequires:  python-sphinx
@@ -65,10 +65,10 @@ OpenStack Watcher client - Python client library for IAAS optimization service
 # but is not available in repository.
 %package -n python2-%{sclient}-tests
 Summary:    OpenStack Watcher client tests
-Requires:   python2-%{sclient} = %{version}-%{release}
+Requires:   python2-%{sclient} = %{epoch}:%{version}-%{release}
 Requires:   python2-devel
 Requires:   git
-Requires:   mock >= 1.2
+Requires:   python2-mock >= 1.2
 Requires:   python-coverage >= 3.6
 Requires:   python-hacking >= 0.10.2
 Requires:   python2-oslo-sphinx >= 2.5.0
@@ -79,7 +79,6 @@ Requires:   python-subunit >= 0.0.18
 Requires:   python-testrepository >= 0.0.18
 Requires:   python-testscenarios >= 0.4
 Requires:   python-testtools >= 1.4.0
-Requires:   python-wheel
 Requires:   python2-devel
 Requires:   sphinx >= 1.1.2
 Requires:   python-sphinx
@@ -122,7 +121,6 @@ BuildRequires:  python3-subunit >= 0.0.18
 BuildRequires:  python3-testrepository >= 0.0.18
 BuildRequires:  python3-testscenarios >= 0.4
 BuildRequires:  python3-testtools >= 1.4.0
-BuildRequires:  python3-wheel
 
 Requires:   python3-babel >= 2.3.4
 Requires:   python3-cliff >= 1.15.0
@@ -143,7 +141,7 @@ OpenStack Watcher client - Python client library for IAAS optimization service
 # but is not available in repository.
 %package -n python3-%{sclient}-tests
 Summary:    OpenStack Watcher client tests
-Requires:   python3-%{sclient} = %{version}-%{release}
+Requires:   python3-%{sclient} = %{epoch}:%{version}-%{release}
 Requires:   python3-devel
 Requires:   python3-pbr >= 1.6
 Requires:   python3-setuptools
@@ -157,7 +155,6 @@ Requires:   python3-subunit >= 0.0.18
 Requires:   python3-testrepository >= 0.0.18
 Requires:   python3-testscenarios >= 0.4
 Requires:   python3-testtools >= 1.4.0
-Requires:   python3-wheel
 
 %description -n python3-%{sclient}-tests
 OpenStack Watcher client tests
@@ -190,26 +187,29 @@ sphinx-build -b html doc/source html
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-
-%py2_install
-
 %if 0%{?with_python3}
 %py3_install
 %endif
 
+%py2_install
+
+
 %check
 %if 0%{?with_python3}
-%{__python3} setup.py test
 rm -rf .testrepository
+%{__python3} setup.py test
 %endif
+
 %{__python2} setup.py test
 
-#NOTE(danpawlik) Probably License file will be added in new release.
+
+#NOTE(danpawlik) License file will be added in new release.
 %files -n python2-%{sclient}
 %{_bindir}/watcher
 #%license LICENSE
 %{python2_sitelib}/%{sclient}
 %{python2_sitelib}/*.egg-info
+%exclude %{python2_sitelib}/%{sclient}/tests
 
 %files -n python2-%{sclient}-tests
 #%license LICENSE
@@ -225,10 +225,11 @@ rm -rf .testrepository
 #%license LICENSE
 %{python3_sitelib}/%{sclient}
 %{python3_sitelib}/*.egg-info
+%exclude %{python3_sitelib}/%{sclient}/tests
 
 %files -n python3-%{sclient}-tests
 #%license LICENSE
 %{python3_sitelib}/%{sclient}/tests
-%endif # with_python3
+%endif
 
 %changelog
