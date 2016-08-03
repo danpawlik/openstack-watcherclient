@@ -1,5 +1,5 @@
 #%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
-%global upstream_version 0.23.0
+%global upstream_version 0.24.0
 
 # Python3 support in OpenStack starts with version 3.5,
 # which is only in Fedora 24+
@@ -10,10 +10,9 @@
 %global client python-watcherclient
 %global sclient watcherclient
 
-Epoch:      1
 Name:       %{client}
 Version:    0
-Release:    23.0
+Release:    24.0
 Summary:    OpenStack Watcher client
 License:    ASL 2.0
 URL:        http://launchpad.net/%{client}/
@@ -35,7 +34,7 @@ BuildRequires:  python2-oslo-sphinx >= 2.5.0
 BuildRequires:  python-oslotest >= 1.10.0
 BuildRequires:  python-pbr >= 1.6
 BuildRequires:  python-setuptools
-BuildRequires:  python-keystoneclient >= 1.7.0
+BuildRequires:  python-keystoneclient >= 1:1.7.0
 BuildRequires:  python-cliff
 BuildRequires:  python-openstackclient >= 2.1.0
 BuildRequires:  python-subunit >= 0.0.18
@@ -46,14 +45,16 @@ BuildRequires:  python2-devel
 BuildRequires:  sphinx >= 1.1.2
 BuildRequires:  python-sphinx
 
+# NOTE(danpawlik) python-osc-lib is not available in RDO repository.
 Requires:   python-oslo-config >= 2:3.4.0
 Requires:   babel >= 2.3.4
 Requires:   python-cliff >= 1.15.0
+Requires:   python-osc-lib >= 0.4.0
 Requires:   python-oslo-i18n >= 2.1.0
-Requires:   python-oslo-utils >= 3.11.0
+Requires:   python-oslo-utils >= 3.16.0
 Requires:   python-pbr >= 1.6
 Requires:   python-prettytable >= 0.7
-Requires:   python-keystoneclient >= 1.7.0
+Requires:   python-keystoneclient >= 1:1.7.0
 Requires:   python-openstackclient >= 2.1.0
 Requires:   python-six >= 1.9.0
 Requires:   python-setuptools
@@ -61,11 +62,9 @@ Requires:   python-setuptools
 %description -n python2-%{sclient}
 OpenStack Watcher client - Python client library for IAAS optimization service
 
-# NOTE(danpawlik) One package is required for unit tests - discover
-# but is not available in repository.
 %package -n python2-%{sclient}-tests
 Summary:    OpenStack Watcher client tests
-Requires:   python2-%{sclient} = %{epoch}:%{version}-%{release}
+Requires:   python2-%{sclient} = %{version}-%{release}
 Requires:   python2-devel
 Requires:   git
 Requires:   python2-mock >= 1.2
@@ -110,7 +109,7 @@ BuildRequires:  python3-pbr >= 1.6
 BuildRequires:  python3-setuptools
 BuildRequires:  git
 BuildRequires:  python3-mock >= 1.2
-BuildRequires:  python3-keystoneclient >= 1.7.0
+BuildRequires:  python3-keystoneclient >= 1:1.7.0
 BuildRequires:  python3-cliff
 BuildRequires:  python-openstackclient >= 2.1.0
 BuildRequires:  python3-coverage >= 3.6
@@ -125,11 +124,11 @@ BuildRequires:  python3-testtools >= 1.4.0
 Requires:   python3-babel >= 2.3.4
 Requires:   python3-cliff >= 1.15.0
 Requires:   python3-oslo-i18n >= 2.1.0
-Requires:   python3-oslo-utils >= 3.11.0
+Requires:   python3-oslo-utils >= 3.16.0
 Requires:   python3-oslo-config >= 2:3.4.0
 Requires:   python3-pbr >= 1.6
 Requires:   python3-prettytable >= 0.7
-Requires:   python3-keystoneclient >= 1.7.0
+Requires:   python3-keystoneclient >= 1:1.7.0
 Requires:   python3-openstackclient >= 2.1.0
 Requires:   python3-six >= 1.9.0
 Requires:   python3-setuptools
@@ -137,11 +136,9 @@ Requires:   python3-setuptools
 %description -n python3-%{sclient}
 OpenStack Watcher client - Python client library for IAAS optimization service
 
-# NOTE(danpawlik) One package is required for unit tests - discover
-# but is not available in repository.
 %package -n python3-%{sclient}-tests
 Summary:    OpenStack Watcher client tests
-Requires:   python3-%{sclient} = %{epoch}:%{version}-%{release}
+Requires:   python3-%{sclient} = %{version}-%{release}
 Requires:   python3-devel
 Requires:   python3-pbr >= 1.6
 Requires:   python3-setuptools
@@ -203,32 +200,31 @@ rm -rf .testrepository
 %{__python2} setup.py test
 
 
-#NOTE(danpawlik) License file will be added in new release.
 %files -n python2-%{sclient}
 %{_bindir}/watcher
-#%license LICENSE
+%license LICENSE
 %{python2_sitelib}/%{sclient}
 %{python2_sitelib}/*.egg-info
 %exclude %{python2_sitelib}/%{sclient}/tests
 
 %files -n python2-%{sclient}-tests
-#%license LICENSE
+%license LICENSE
 %{python2_sitelib}/%{sclient}/tests
 
 %files -n python-%{sclient}-doc
-#%license LICENSE
+%license LICENSE
 %doc html README.rst
 
 %if 0%{?with_python3}
 %files -n python3-%{sclient}
 %{_bindir}/watcher
-#%license LICENSE
+%license LICENSE
 %{python3_sitelib}/%{sclient}
 %{python3_sitelib}/*.egg-info
 %exclude %{python3_sitelib}/%{sclient}/tests
 
 %files -n python3-%{sclient}-tests
-#%license LICENSE
+%license LICENSE
 %{python3_sitelib}/%{sclient}/tests
 %endif
 
