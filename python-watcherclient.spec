@@ -1,8 +1,5 @@
-#%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
-%global upstream_version 0.24.0
+%{!?upstream_version: %global upstream_version %{version}}
 
-# Python3 support in OpenStack starts with version 3.5,
-# which is only in Fedora 24+
 %if 0%{?fedora} >= 24
 %global with_python3 1
 %endif
@@ -11,12 +8,11 @@
 %global sclient watcherclient
 
 Name:       %{client}
-Version:    0
-Release:    24.0
+Version:    0.24.0
+Release:    1%{?dist}
 Summary:    OpenStack Watcher client
 License:    ASL 2.0
 URL:        http://launchpad.net/%{client}/
-
 Source0:    http://tarballs.openstack.org/%{client}/%{client}-%{upstream_version}.tar.gz
 
 BuildArch:  noarch
@@ -25,12 +21,12 @@ BuildArch:  noarch
 Summary:    OpenStack Watcher client
 %{?python_provide:%python_provide python2-%{sclient}}
 
-BuildRequires:  python2-devel
+BuildRequires:  python-devel
 BuildRequires:  git
-BuildRequires:  python2-mock >= 1.2
+BuildRequires:  python-mock >= 1.2
 BuildRequires:  python-coverage >= 3.6
 BuildRequires:  python-hacking >= 0.10.2
-BuildRequires:  python2-oslo-sphinx >= 2.5.0
+BuildRequires:  python-oslo-sphinx >= 2.5.0
 BuildRequires:  python-oslotest >= 1.10.0
 BuildRequires:  python-pbr >= 1.6
 BuildRequires:  python-setuptools
@@ -41,7 +37,7 @@ BuildRequires:  python-subunit >= 0.0.18
 BuildRequires:  python-testrepository >= 0.0.18
 BuildRequires:  python-testscenarios >= 0.4
 BuildRequires:  python-testtools >= 1.4.0
-BuildRequires:  python2-devel
+BuildRequires:  python-devel
 BuildRequires:  sphinx >= 1.1.2
 BuildRequires:  python-sphinx
 
@@ -65,12 +61,12 @@ OpenStack Watcher client - Python client library for IAAS optimization service
 %package -n python2-%{sclient}-tests
 Summary:    OpenStack Watcher client tests
 Requires:   python2-%{sclient} = %{version}-%{release}
-Requires:   python2-devel
+Requires:   python-devel
 Requires:   git
-Requires:   python2-mock >= 1.2
+Requires:   python-mock >= 1.2
 Requires:   python-coverage >= 3.6
 Requires:   python-hacking >= 0.10.2
-Requires:   python2-oslo-sphinx >= 2.5.0
+Requires:   python-oslo-sphinx >= 2.5.0
 Requires:   python-oslotest >= 1.10.0
 Requires:   python-pbr >= 1.6
 Requires:   python-setuptools
@@ -78,9 +74,7 @@ Requires:   python-subunit >= 0.0.18
 Requires:   python-testrepository >= 0.0.18
 Requires:   python-testscenarios >= 0.4
 Requires:   python-testtools >= 1.4.0
-Requires:   python2-devel
-Requires:   sphinx >= 1.1.2
-Requires:   python-sphinx
+Requires:   python-devel
 
 %description -n python2-%{sclient}-tests
 OpenStack Watcher client tests
