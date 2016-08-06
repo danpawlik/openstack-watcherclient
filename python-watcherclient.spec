@@ -66,7 +66,6 @@ Requires:   git
 Requires:   python-mock >= 1.2
 Requires:   python-coverage >= 3.6
 Requires:   python-hacking >= 0.10.2
-Requires:   python-oslo-sphinx >= 2.5.0
 Requires:   python-oslotest >= 1.10.0
 Requires:   python-pbr >= 1.6
 Requires:   python-setuptools
@@ -140,7 +139,6 @@ Requires:   git
 Requires:   python3-mock >= 1.2
 Requires:   python3-coverage >= 3.6
 Requires:   python3-hacking >= 0.10.2
-Requires:   python3-oslo-sphinx >= 2.5.0
 Requires:   python3-oslotest >= 1.10.0
 Requires:   python3-subunit >= 0.0.18
 Requires:   python3-testrepository >= 0.0.18
