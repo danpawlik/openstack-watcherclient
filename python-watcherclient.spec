@@ -41,9 +41,8 @@ BuildRequires:  python-devel
 BuildRequires:  sphinx >= 1.1.2
 BuildRequires:  python-sphinx
 
-# NOTE(danpawlik) python-osc-lib is not available in RDO repository.
 Requires:   python-oslo-config >= 2:3.4.0
-Requires:   babel >= 2.3.4
+Requires:   python-babel >= 2.3.4
 Requires:   python-cliff >= 1.15.0
 Requires:   python-osc-lib >= 0.4.0
 Requires:   python-oslo-i18n >= 2.1.0
@@ -116,6 +115,7 @@ BuildRequires:  python3-testtools >= 1.4.0
 
 Requires:   python3-babel >= 2.3.4
 Requires:   python3-cliff >= 1.15.0
+Requires:   python3-osc-lib >= 0.4.0
 Requires:   python3-oslo-i18n >= 2.1.0
 Requires:   python3-oslo-utils >= 3.16.0
 Requires:   python3-oslo-config >= 2:3.4.0
@@ -178,10 +178,15 @@ rm -rf html/.{doctrees,buildinfo}
 %install
 %if 0%{?with_python3}
 %py3_install
+mv %{buildroot}%{_bindir}/watcher %{buildroot}%{_bindir}/watcher-%{python3_version}
+ln -s ./watcher-%{python3_version} %{buildroot}%{_bindir}/watcher-3
 %endif
 
 %py2_install
+mv %{buildroot}%{_bindir}/watcher %{buildroot}%{_bindir}/watcher-%{python2_version}
+ln -s ./watcher-%{python2_version} %{buildroot}%{_bindir}/watcher-2
 
+ln -s ./watcher-2 %{buildroot}%{_bindir}/watcher
 
 %check
 %if 0%{?with_python3}
@@ -194,6 +199,8 @@ rm -rf .testrepository
 
 %files -n python2-%{sclient}
 %{_bindir}/watcher
+%{_bindir}/watcher-2
+%{_bindir}/watcher-%{python2_version}
 %license LICENSE
 %{python2_sitelib}/%{sclient}
 %{python2_sitelib}/*.egg-info
@@ -209,7 +216,8 @@ rm -rf .testrepository
 
 %if 0%{?with_python3}
 %files -n python3-%{sclient}
-%{_bindir}/watcher
+%{_bindir}/watcher-3
+%{_bindir}/watcher-%{python3_version}
 %license LICENSE
 %{python3_sitelib}/%{sclient}
 %{python3_sitelib}/*.egg-info
