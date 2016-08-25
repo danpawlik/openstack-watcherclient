@@ -58,7 +58,6 @@ OpenStack Watcher client - Python client library for IAAS optimization service
 %package -n python2-%{sclient}-tests
 Summary:    OpenStack Watcher client tests
 Requires:   python2-%{sclient} = %{version}-%{release}
-Requires:   python-devel
 Requires:   git
 Requires:   python-mock >= 1.2
 Requires:   python-coverage >= 3.6
@@ -70,7 +69,6 @@ Requires:   python-subunit >= 0.0.18
 Requires:   python-testrepository >= 0.0.18
 Requires:   python-testscenarios >= 0.4
 Requires:   python-testtools >= 1.4.0
-Requires:   python-devel
 
 %description -n python2-%{sclient}-tests
 OpenStack Watcher client tests
@@ -132,7 +130,6 @@ OpenStack Watcher client - Python client library for IAAS optimization service
 %package -n python3-%{sclient}-tests
 Summary:    OpenStack Watcher client tests
 Requires:   python3-%{sclient} = %{version}-%{release}
-Requires:   python3-devel
 Requires:   python3-pbr >= 1.6
 Requires:   python3-setuptools
 Requires:   git
