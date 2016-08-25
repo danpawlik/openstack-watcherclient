@@ -95,6 +95,8 @@ Summary:    OpenStack Watcher client
 %{?python_provide:%python_provide python3-%{sclient}}
 
 
+# NOTE(danpawlik) Package python3-openstackclient is required for
+# BuildRequires but it's not available in RDO repo.
 BuildRequires:  python3-devel
 BuildRequires:  git
 BuildRequires:  python3-mock >= 1.2
@@ -106,13 +108,11 @@ BuildRequires:  python3-pbr >= 1.6
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-keystoneclient >= 1:1.7.0
 BuildRequires:  python3-cliff
-BuildRequires:  python-openstackclient >= 2.1.0
 BuildRequires:  python3-subunit >= 0.0.18
 BuildRequires:  python3-testrepository >= 0.0.18
 BuildRequires:  python3-testscenarios >= 0.4
 BuildRequires:  python3-testtools >= 1.4.0
 BuildRequires:  python3-sphinx >= 1.2.1
-
 
 Requires:   python3-babel >= 2.3.4
 Requires:   python3-cliff >= 1.15.0
@@ -123,7 +123,6 @@ Requires:   python3-oslo-config >= 2:3.4.0
 Requires:   python3-pbr >= 1.6
 Requires:   python3-prettytable >= 0.7
 Requires:   python3-keystoneclient >= 1:1.7.0
-Requires:   python3-openstackclient >= 2.1.0
 Requires:   python3-six >= 1.9.0
 Requires:   python3-setuptools
 
